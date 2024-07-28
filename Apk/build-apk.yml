@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     branches:
-      - main  # يمكنك تحديد الفرع الذي ترغب في تشغيل العمل عليه
+      - main  # يمكنك تغيير الفرع وفقًا لاحتياجاتك
 
 jobs:
   build:
@@ -11,12 +11,13 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # تحديث إلى الإصدار الأخير
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3  # تحديث إلى الإصدار الأخير
       with:
         java-version: '11'
+        distribution: 'adopt'  # يمكنك استخدام 'temurin' أو 'zulu' إذا كنت تفضلها
 
     - name: Install Android SDK
       run: |
@@ -42,8 +43,7 @@ jobs:
         ANDROID_HOME: ${{ secrets.ANDROID_HOME }}
 
     - name: Upload APK
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # تحديث إلى الإصدار الأخير
       with:
         name: my-app-apk
         path: platforms/android/app/build/outputs/apk/release/app-release.apk
-
