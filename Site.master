@@ -1,0 +1,155 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- إضافة مكتبة Bootstrap -->
+    <link href="Styles/bootstrap4.3.1.min.css" rel="stylesheet" />
+    <!-- إضافة مكتبة Google Fonts -->
+    <link href="Styles/Fonts.css" rel="stylesheet" />
+   
+    
+    <asp:ContentPlaceHolder ID="Header" runat="server" />
+    
+    <!-- تخصيص التنسيقات -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url(png/BG5.jpg);
+           
+            color: dodgerblue;
+        }
+.navbar {background-color: #A6B8C9; position: -webkit-sticky;  position: sticky; top: 0; z-index: 500;direction: rtl;font-size:small;height:60px; border-radius:25px;color: dodgerblue;display: flex;align-items: center; } .navbar ul { list-style-type: none;margin: 0;padding: 0; display: flex;justify-content: flex-start; position: sticky; top: 0;}.navbar li { float: none;}.navbar li a {display: block;color: black; text-align: center;padding: 14px 20px;text-decoration: none;}.navbar li a:hover {background-color: #111;}.navbar-nav .nav-link { font-size: 1.1em; color: #fff; transition: color 0.3s ease-in-out, font-weight 0.3s ease-in-out; }.navbar-nav .nav-link:hover {color: rgba(255, 255, 255, 0.7); font-weight: bold; background-color: transparent;}.navbar-nav .nav-link.active {font-weight: 600;color: red; }
+.cart-counter { top: -10px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; }
+        /* إضافة تنسيقات خاصة لجعل النافبار يظهر على الجانب الأيسر فقط على شاشات الموبايل */
+ @media (max-width: 768px) 
+    {
+        .navbar-collapse { position: fixed;top: 0;left: 0;height: 100%; width: 250px; background-color: lightseagreen; z-index: 1000; overflow-y: auto;transition: transform 3s ease; transform: translateX(-100%); border-radius: 35px; opacity: 0.8; }.navbar-collapse.show { transform: translateX(0); }.navbar-toggler { position: fixed; top: 10px; left: 10px; z-index: 1100; }.navbar-brand {flex: 1;display: flex;}.navbar-brand img { width: 120px; height: auto;margin:-10px; /* تعديل البادنج على الموبايل */ }
+    }
+.content {padding: 20px;}
+.container {    margin-top: 50px;    direction: rtl; /* تحديث الاتجاه */}
+.message { margin-top: 20px;}
+.form-group { margin-bottom: 20px;}
+.btn-success {  width: 100%;}
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; direction: rtl; /* تغيير الاتجاه إلى اليمين إلى اليسار */}.product {border: 1px solid #ddd; padding: 10px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center;}.product img {max-width: 100%;height: auto; border-radius: 8px; object-fit: cover; /* يحافظ على نسبة العرض إلى الارتفاع */width: 100%;height: 200px; /* تعديل هذا لتحديد الارتفاع المطلوب */}.product h2 { margin: 10px 0;}.product p {margin: 10px 0;}.product button { background-color: #28a745;color: #fff;border: none; padding: 10px;cursor: pointer; border-radius: 4px;}.product button:hover {  background-color: #218838;}
+.table th,.table td { width: 25%;}.table td,.table th {padding: 10px;}.table {border-spacing: 10px;}.table th,.table td { text-align: center;}.table th,.table td { background-color: #f2f2f2;border: 1px solid #ddd;}.table th {background-color: #4CAF50;color: white;font-weight: bold;}
+.dropdown-menu {background-color: gray; border: none;border-radius: 35px;}.dropdown-menu .dropdown-item { color: white; padding: 14px 20px;  text-align: center; background-color: transparent;}.dropdown-menu .dropdown-item:hover {color: rgba(255, 255, 255, 0.7); font-weight: bold; background-color: transparent;}
+ @media (max-width: 768px)
+    {
+        .dropdown-menu { position: static; float: none; width: 100%; box-shadow: none;background-color: cornflowerblue;border-radius: 35px; }.dropdown-menu .dropdown-item {color: white; padding: 14px 20px;  text-align: center; background-color: transparent;}.dropdown-menu .dropdown-item:hover {color: rgba(255, 255, 255, 0.7); font-weight: bold; background-color: transparent;}
+    }
+ /* تصميم خاص للشاشات الصغيرة */
+@media (max-width: 768px) { .table-responsive { overflow-x: auto;  -webkit-overflow-scrolling: touch;  }.table {width: 100%;margin-bottom: 1rem;overflow: hidden;} .table th, .table td { font-size: 10px; /* تعديل حجم الخط */padding: 2px 4px;max-width: 50px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;  }.table td img { max-width: 50px; /* تقليل حجم الصور إن وجدت */ max-height: 50px;    }.hide-mobile { display: none;   }}
+
+</style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <!-- استخدام مكونات Bootstrap لتصميم القائمة -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="Default.aspx" ><img src="png/Slider1.jpg" width="180" height="60" style="border-radius:25px ; "   /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Default.aspx" style="color:black"> الرئيسية 🏠</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="Home.aspx"style="color:black">تسوق الأن 🛒</a>
+                    </li>
+                    <li class="nav-item" runat="server" id="li1" visible="false">
+
+                        <a class="nav-link" href="UploadProduct.aspx"style="color:black">تحميل المنتج🆕</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Cart.aspx"style="color:black">عربة التسوق<asp:Label ID="CartCounter" runat="server" Text="0" CssClass="cart-counter" /><span class="cart-icon">🛒</span></a>
+                    </li>
+                    <li class="nav-item" runat="server" id="li2" visible="false">
+                        <a class="nav-link" href="ViewProducts.aspx"style="color:black">تعديل منتجات⚙️</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contact.aspx"style="color:black">اتصل بنا 📧</a>
+                    </li>
+                    <li class="nav-item" runat="server" id="li3" visible="false">
+                        <a class="nav-link" href="Register.aspx"style="color:black">انشاء مستخدمين👤</a>
+                    </li>
+                    <li class="nav-item" runat="server" id="li4" visible="false">
+                        <a class="nav-link" href="ManageUsers.aspx"style="color:black">إدارة المستخدمين👥</a>
+                    </li>
+                    <li class="nav-item" runat="server" id="li5" visible="false">
+                        <a class="nav-link" href="Orders.aspx"style="color:black">كل الطلبات🗂</a>
+                    </li>
+
+                </ul>
+                <ul dir="ltr" class="navbar-nav">
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Login.aspx"style="color:black">تسجيل الدخول👤</a>
+                                <a class="nav-link" style="font-size: xx-small; text-decoration: underline; color: red" href="UserRegister.aspx">ليس لدي حساب</a>
+                            </li>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Logout.aspx"style="color:black">تسجيل الخروج↩️</a>
+                            </li>
+                            <li class="nav-item active dropdown w3-hover-light-blue">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black">
+                                    حسابي
+                                </a>
+                                <div class="dropdown-menu " aria-labelledby="navbarDropdown" >
+                                    <a class="dropdown-item" href="UserProfile.aspx"style="color:black">بياناتي🗃️</a>
+                                    <a class="dropdown-item" href="UserOrders.aspx"style="color:black">طلباتي📋</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="Logout.aspx"style="color:black">تسجيل الخروج↩️</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link">مرحبًا، <asp:LoginName runat="server" style="color: dodgerblue" /></a>
+                            </li>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container mt-5">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+    </form>
+
+    <!-- إضافة مكتبات JavaScript الخاصة بـ Bootstrap -->
+    <script src="Scripts/jquery-4.3.1.slim.min.js"></script>
+    <script src="Scripts/popper.min-1.14.7.js"></script>
+    <script src="Scripts/bootstrap.min-4.3.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.navbar-toggler').click(function(){
+                $('.navbar-collapse').toggleClass('show');
+            });
+
+            // إظهار وإخفاء القائمة المنسدلة
+            $('.dropdown-toggle').click(function(){
+                var $dropdownMenu = $(this).next('.dropdown-menu');
+                $('.dropdown-menu').not($dropdownMenu).removeClass('show');
+                $dropdownMenu.toggleClass('show');
+                return false; // لمنع الرابط من الانتقال إلى أعلى الصفحة
+            });
+
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.dropdown-menu').length && !$(e.target).closest('.dropdown-toggle').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
