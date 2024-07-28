@@ -37,7 +37,7 @@ jobs:
 
     - name: Build APK
       run: |
-        cd www
+        cd Apk
         cordova build android --release
 
     - name: Upload APK
